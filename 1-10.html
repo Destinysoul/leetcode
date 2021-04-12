@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1-10</title>
+</head>
+<body>
+<script>
+    //第一题链接https://leetcode-cn.com/problems/two-sum/
+    // 题目规定了答案唯一，且同一个元素不可以重复出现，那最简单的思路就是循环这个数组，寻找数组里是否有目标和减去当前数字即可
+    let twoSum = function (nums, target) {
+        for (let i = 0; i < nums.length; i++) {
+            if (nums.indexOf(target - nums[i]) !== -1 && i !== nums.indexOf(target - nums[i])) {
+                return [i, nums.indexOf(target - [nums[i]])];
+            }
+        }
+    };
+    //第二题链接https://leetcode-cn.com/problems/add-two-numbers/
+    // 第一反应肯定是从后往前相加，设置一个大于10的进位flag，然后再依次链接即可
+    // 但是这样如果两个链表长度不一致则会出现找不到节点的情况，因此在找不到的时候默认为0
+    /**
+     * Definition for singly-linked list.
+     * function ListNode(val, next) {
+     *     this.val = (val===undefined ? 0 : val)
+     *     this.next = (next===undefined ? null : next)
+     * }
+     */
+    /**
+     * @param {ListNode} l1
+     * @param {ListNode} l2
+     * @return {ListNode}
+     */
+    let addTwoNumbers = function (l1, l2) {
+        let over = 0,
+            head = new ListNode('0');
+        let result = head;
+        //进位,l1,l2有一个存在则执行
+        while (over || l1 || l2) {
+            let val1 = l1 ? l1.val : 0;
+            let val2 = l2 ? l2.val : 0;
+            let sum = val1 + val2 + over;
+            //下一个节点为10的余数，超过十则进位
+            over = sum >= 10 ? 1 : 0;
+            head.next = new ListNode(sum % 10);
+            head = head.next;
+            //继续计算下一位
+            if (l1) l1 = l1.next;
+            if (l2) l2 = l2.next;
+        }
+        return result.next
+    };
+</script>
+</body>
+</html>
