@@ -1,1 +1,1 @@
-# leetcode
+无聊的时候记录一下刷leetcode的过程
