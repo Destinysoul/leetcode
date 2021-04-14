@@ -49,6 +49,114 @@
         }
         return result.next
     };
+    //第三题链接https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
+    //创建一个空的数组temp用于保存当前的最长无重复字符串，length记录当前无重复字符串的长度,
+    //max_length记录已经遍历过部分的长度,出现重复的时候更新temp,同时判断是否需要更新max_length,
+    //最后输出的时候记得判断一下temp.length和max_length的大小即可
+    /**
+     * @param {string} s
+     * @return {number}
+     */
+    let lengthOfLongestSubstring = function(s) {
+        let temp = [], length = 0, max_length = 0;
+        for (let i = 0; i < s.length; i++) {
+            if (temp.indexOf(s[i]) === -1) {
+                temp.push(s[i]);
+                length++
+            } else {
+                temp.splice(0, temp.indexOf(s[i]) + 1);
+                temp.push(s[i]);
+                max_length = length > max_length ? length : max_length;
+                length = temp.length
+            }
+        }
+        return max_length > length ? max_length : length
+    };
+    //第四题链接https://leetcode-cn.com/problems/median-of-two-sorted-arrays/
+    //合并两个数组，排序，取中位数即可，效率肯定不是最高但是肯定是最容易想到的
+    /**
+     * @param {number[]} nums1
+     * @param {number[]} nums2
+     * @return {number}
+     */
+    let findMedianSortedArrays = function(nums1, nums2) {
+        function sortNumber(a, b) {
+            return a - b
+        }
+
+        let newArray = (nums1.concat(nums2)).sort(sortNumber);
+        if (newArray.length % 2 === 1) {
+            return newArray[(newArray.length - 1) / 2]
+        } else {
+            return (newArray[(newArray.length) / 2 - 1] + newArray[(newArray.length) / 2]) / 2
+        }
+    };
+    //第五题链接https://leetcode-cn.com/problems/longest-palindromic-substring/
+    //先判断是否为空，为空则返回空
+    //创建一个judge函数，判断传入的是否为回文字符串
+    //然后从最长的字符串开始一个一个判断，外层循环的j为当前判断的数组长度，内层循环所有该长度的数组，如果符合则输出
+    /**
+     * @param {string} s
+     * @return {string}
+     */
+    let longestPalindrome = function(s) {
+        if (s === "") return "";
+
+        function judge(str) {
+            for (let i = 0; i < Math.floor(str.length / 2); i++) {
+                if (str[i] !== str[str.length - i - 1]) {
+                    return 0
+                }
+            }
+            return 1
+        }
+
+        //j为当前循环长度
+        for (let j = s.length; j > 0; j--) {
+            //循环这个长度的每一个字符串
+            for (let cut = 0; cut <= s.length - j; cut++)
+                if (judge(s.slice(cut, cut + j)) === 1) {
+                    return s.slice(cut, cut + j)
+                }
+        }
+    };
+    //第六题链接https://leetcode-cn.com/problems/zigzag-conversion/
+    //先判断行数，如果为1则直接输出，如果不是则计算每组个数,每组个数为行数-1*2（一个√）
+    //遍历原字符串，分别计算每个应该放入第几行，最后合并即可
+    /**
+     * @param {string} s
+     * @param {number} numRows
+     * @return {string}
+     */
+    let convert = function(s, numRows) {
+        if (numRows <= 1) {
+            return s
+        } else {
+            let strs = [], result = "",
+                group = (numRows - 1) * 2;
+            //初始化，有几行设置几个
+            for (let i = 0; i < numRows; i++) {
+                strs.push("")
+            }
+            //判断放入第几行
+            for (let i = 0; i < s.length; i++) {
+                //判断是每组的第几个
+                let index = (i + 1) % group === 0 ? group : (i + 1) % group;
+                //是第一竖列
+                if (index <= group / 2 + 1) {
+                    strs[(i % group)] += s[i];
+                }
+                //不是第一竖列
+                else {
+                    strs[group - index + 1] += s[i];
+                }
+            }
+            for (let i = 0; i < numRows; i++) {
+                result += strs[i]
+            }
+            return result
+        }
+    };
 </script>
 </body>
 </html>
