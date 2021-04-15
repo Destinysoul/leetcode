@@ -15,6 +15,7 @@
             }
         }
     };
+
     //第二题链接https://leetcode-cn.com/problems/add-two-numbers/
     // 第一反应肯定是从后往前相加，设置一个大于10的进位flag，然后再依次链接即可
     // 但是这样如果两个链表长度不一致则会出现找不到节点的情况，因此在找不到的时候默认为0
@@ -49,6 +50,7 @@
         }
         return result.next
     };
+
     //第三题链接https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
     //创建一个空的数组temp用于保存当前的最长无重复字符串，length记录当前无重复字符串的长度,
     //max_length记录已经遍历过部分的长度,出现重复的时候更新temp,同时判断是否需要更新max_length,
@@ -57,7 +59,7 @@
      * @param {string} s
      * @return {number}
      */
-    let lengthOfLongestSubstring = function(s) {
+    let lengthOfLongestSubstring = function (s) {
         let temp = [], length = 0, max_length = 0;
         for (let i = 0; i < s.length; i++) {
             if (temp.indexOf(s[i]) === -1) {
@@ -72,6 +74,7 @@
         }
         return max_length > length ? max_length : length
     };
+
     //第四题链接https://leetcode-cn.com/problems/median-of-two-sorted-arrays/
     //合并两个数组，排序，取中位数即可，效率肯定不是最高但是肯定是最容易想到的
     /**
@@ -79,7 +82,7 @@
      * @param {number[]} nums2
      * @return {number}
      */
-    let findMedianSortedArrays = function(nums1, nums2) {
+    let findMedianSortedArrays = function (nums1, nums2) {
         function sortNumber(a, b) {
             return a - b
         }
@@ -91,6 +94,7 @@
             return (newArray[(newArray.length) / 2 - 1] + newArray[(newArray.length) / 2]) / 2
         }
     };
+
     //第五题链接https://leetcode-cn.com/problems/longest-palindromic-substring/
     //先判断是否为空，为空则返回空
     //创建一个judge函数，判断传入的是否为回文字符串
@@ -99,7 +103,7 @@
      * @param {string} s
      * @return {string}
      */
-    let longestPalindrome = function(s) {
+    let longestPalindrome = function (s) {
         if (s === "") return "";
 
         function judge(str) {
@@ -120,6 +124,7 @@
                 }
         }
     };
+
     //第六题链接https://leetcode-cn.com/problems/zigzag-conversion/
     //先判断行数，如果为1则直接输出，如果不是则计算每组个数,每组个数为行数-1*2（一个√）
     //遍历原字符串，分别计算每个应该放入第几行，最后合并即可
@@ -128,7 +133,7 @@
      * @param {number} numRows
      * @return {string}
      */
-    let convert = function(s, numRows) {
+    let convert = function (s, numRows) {
         if (numRows <= 1) {
             return s
         } else {
@@ -157,7 +162,84 @@
             return result
         }
     };
+
     //第七题链接https://leetcode-cn.com/problems/reverse-integer/
+    //先判断是否超出题目给定的范围，超出返回0，没超出转换为字符串后进行翻转（这方法烂爆了。。）
+    /**
+     * @param {number} x
+     * @return {number}
+     */
+    let reverse = function (x) {
+        function reverse(num) {
+            let strnum = num.toString(), temp = [];
+            for (let i = 0; i < strnum.length; i++) {
+                temp[strnum.length - i - 1] = strnum[i];
+            }
+            return parseInt(temp.join(""));
+        }
+
+        let max = Math.pow(2, 31) - 1;
+        if (x < 0) {
+            return reverse(Math.abs(x)) > max + 1 ? 0 : reverse(Math.abs(x)) * (-1)
+        } else {
+            return reverse(x) > max ? 0 : reverse(x);
+        }
+    };
+    //看了题解的思路，除以10取余数，进行拼接即可
+    // let reverse = function(x) {
+    //     let result = 0;
+    //     while(x !== 0) {
+    //         result = result * 10 + x % 10;
+    //         x = (x / 10) | 0;
+    //     }
+    //     return (result | 0) === result ? result : 0;
+    // };
+
+    //第八题链接https://leetcode-cn.com/problems/string-to-integer-atoi/
+    //先创建一个judge函数判断是否越界
+    //循环字符串，截取出符合要求的部分，如果为-/+则判断下一位是否为数字，否则直接判断是否为数字
+    //截取出来的部分parseInt即可，会修正多个符号的问题，如parseInt('+1+1')会输出1
+    /**
+     * @param {string} str
+     * @return {number}
+     */
+    let myAtoi = function(str) {
+        let result = "", newstr = "";
+
+        //判断数字是否越界
+        function judge(x) {
+            let max = Math.pow(2, 31) - 1, min = Math.pow(-2, 31);
+            return x < 0 ? (x < min ? min : x) : (x > max ? max : x);
+        }
+
+        //截取到第一位不是数字为止
+        for (let i = 0; i < str.length; i++) {
+            if (str[i] !== " ") {
+                //如果是符号判断下一位是不是数字
+                if ((str[i] === "-" || str[i] === "+") && !(/^[0-9]*$/).test(str[i + 1])) {
+                    return 0
+                } else if ((str[i] !== "-" && str[i] !== "+") && !(/^[0-9]*$/).test(str[i])) {
+                    return 0
+                }
+                //出现如+1+1这种情况会在parseInt时候修正
+                newstr = str.slice(i);
+                break;
+            }
+        }
+        //输出结果
+        if (newstr === "") {
+            return 0
+        } else {
+            for (let i = 0; i < newstr.length; i++) {
+                if (newstr[i] !== " ") {
+                    result += newstr[i]
+                } else {
+                    return judge(parseInt(result))
+                }
+            }
+        }
+        return judge(parseInt(result))
+    };
 </script>
 </body>
 </html>
