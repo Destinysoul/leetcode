@@ -203,7 +203,7 @@
      * @param {string} str
      * @return {number}
      */
-    let myAtoi = function(str) {
+    let myAtoi = function (str) {
         let result = "", newstr = "";
 
         //判断数字是否越界
@@ -239,6 +239,53 @@
             }
         }
         return judge(parseInt(result))
+    };
+
+    //第九题链接https://leetcode-cn.com/problems/palindrome-number/
+    //转换为字符串判断即可
+    //进阶条件不转换为字符串的话，
+    //负数可以全都不考虑，正数可以考虑不断除以10去余数，判断后一半和前一半大小是否相同
+    /**
+     * @param {number} x
+     * @return {boolean}
+     */
+    let isPalindrome = function (x) {
+        let num = x.toString();
+        for (let i = 0; i < Math.floor(num.length / 2); i++) {
+            if (num[i] !== num[num.length - i - 1]) {
+                return false
+            }
+        }
+        return true
+    };
+    //进阶版本
+    // let more_isPalindrome = function (x) {
+    //     if (x < 0) return false;
+    //     if (x < 10) return true;
+    //     let result = 0;
+    //     while (x > 0) {
+    //         result = 10 * result + x % 10;
+    //         x = Math.floor(x / 10);
+    //         if(result===0){
+    //             return false
+    //         }else{
+    //             if (result === x || result === Math.floor(x / 10)) {
+    //                 return true
+    //             }
+    //         }
+    //     }
+    //     return false
+    // };
+
+    //第十题链接https://leetcode-cn.com/problems/regular-expression-matching/
+    //正则不太会，这题抄答案了。。
+    /**
+     * @param {string} s
+     * @param {string} p
+     * @return {boolean}
+     */
+    let isMatch = function (s, p) {
+        return new RegExp(['^', ...p, '$'].join('')).test(s);
     };
 </script>
 </body>
