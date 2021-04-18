@@ -13,16 +13,16 @@
      * @param {number[]} height
      * @return {number}
      */
-    //无脑全比较
+        //无脑全比较
     let maxArea = function (height) {
-        let max = 0;
-        for (let i = 0; i < height.length; i++) {
-            for (let j = i + 1; j < height.length; j++) {
-                max = max > Math.min(height[i], height[j]) * (j - i) ? max : Math.min(height[i], height[j]) * (j - i)
+            let max = 0;
+            for (let i = 0; i < height.length; i++) {
+                for (let j = i + 1; j < height.length; j++) {
+                    max = max > Math.min(height[i], height[j]) * (j - i) ? max : Math.min(height[i], height[j]) * (j - i)
+                }
             }
-        }
-        return max
-    };
+            return max
+        };
     //改进版
     let new_maxArea = function (height) {
         let left = 0,
@@ -42,7 +42,7 @@
      * @return {string}
      */
     let intToRoman = function (num) {
-        var result = "",
+        let result = "",
             thousand = Math.floor(num / 1000),
             hundred = Math.floor(num / 100) - 10 * thousand,
             ten = Math.floor(num / 10) - 100 * thousand - 10 * hundred,
@@ -154,6 +154,77 @@
                 break;
         }
         return result
+    };
+
+    //第十三题链接https://leetcode-cn.com/problems/roman-to-integer/
+    //没啥好说的，和上一题一样，硬来就完事了。。
+    /**
+     * @param {string} s
+     * @return {number}
+     */
+    let romanToInt = function (s) {
+        let result = 0, letter = s.split('');
+        for (let i = 0; i < letter.length; i++) {
+            switch (letter[i]) {
+                case "M":
+                    result += 1000;
+                    break;
+                case "D":
+                    result += 500;
+                    break;
+                case "C":
+                    if (letter[i + 1] !== 'M' && letter[i + 1] !== 'D') {
+                        result += 100
+                    } else {
+                        result -= 100
+                    }
+                    break;
+                case "L":
+                    result += 50;
+                    break;
+                case "X":
+                    if (letter[i + 1] !== 'C' && letter[i + 1] !== 'L') {
+                        result += 10
+                    } else {
+                        result -= 10
+                    }
+                    break;
+                case "V":
+                    result += 5;
+                    break;
+                case "I":
+                    if (letter[i + 1] !== 'V' && letter[i + 1] !== 'X') {
+                        result += 1
+                    } else {
+                        result -= 1
+                    }
+                    break;
+            }
+        }
+        return result
+    };
+
+    //第十四题链接https://leetcode-cn.com/problems/longest-common-prefix/
+    //首先判断是否为空
+    //先将第一个单词赋给一个临时变量，去和下一个单词进行比较，找出两个公共的最长前缀
+    //再将比较后的公共前缀和下一个单词比较，依次循环，这样所有的单词比较完之后，剩余的即是所需答案
+    /**
+     * @param {string[]} strs
+     * @return {string}
+     */
+    let longestCommonPrefix = function (strs) {
+        if (strs.length === 0) return "";
+        let answer = strs[0];
+        for (let i = 1; i < strs.length; i++) {
+            for (let j = 0; j < answer.length && j < strs[i].length; j++) {
+                if (answer[j] !== strs[i][j])
+                    break;
+            }
+            answer = answer.substr(0, j);
+            if (answer === "")
+                return answer;
+        }
+        return answer;
     };
 </script>
 </body>
