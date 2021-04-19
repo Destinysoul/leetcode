@@ -226,6 +226,99 @@
         }
         return answer;
     };
+
+    //第十五题链接https://leetcode-cn.com/problems/3sum/
+    //首先最容易想到的肯定是三重循环，不过会超时
+    //换一个思路，减少一重循环，先对数组进行排序
+    //外层循环遍历数组，内层给定一左一右两个指针，和小于零则左指针右移，反正右指针左移
+    /**
+     * @param {number[]} nums
+     * @return {number[][]}
+     */
+        //三重循环硬来（会超时）
+    let threeSum = function (nums) {
+            if (nums.length === 0) return [];
+            let result = [], result_norepeat = [], flag = true, total_flag = true;
+            for (let i = 0; i < nums.length; i++) {
+                for (let j = i + 1; j < nums.length; j++) {
+                    for (let k = j + 1; k < nums.length; k++) {
+                        if (nums[i] + nums[j] + nums[k] === 0) {
+                            result.push([nums[i], nums[j], nums[k]].sort())
+                        }
+                    }
+                }
+            }
+            for (let i = 0; i < result.length; i++) {
+                total_flag = true;
+                for (let j = i + 1; j < result.length;) {
+                    for (let index = 0; index < 3; index++) {
+                        if (result[i][index] !== result[j][index]) {
+                            flag = false;
+                        }
+                    }
+                    if (flag) {
+                        total_flag = false;
+                        break;
+                    } else {
+                        flag = true;
+                        j++
+                    }
+                }
+                flag = true;
+                if (total_flag) result_norepeat.push(result[i]);
+            }
+            return result_norepeat
+        };
+    //换一个思路，减少一层循环
+    let new_threeSum = function (nums) {
+        let result = [];
+        if (nums.length < 3) return result;
+        nums.sort((a, b) => a - b);
+        for (let i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) break;//大于0可以结束了
+            if (i > 0 && nums[i] === nums[i - 1]) continue;//重复的要跳过
+            let left = i + 1,
+                right = nums.length - 1;//设左右指针
+            while (left < right) {
+                let sum = nums[i] + nums[left] + nums[right];
+                if (sum === 0) {
+                    result.push([nums[i], nums[left], nums[right]]);
+                    while (nums[left] === nums[left + 1]) left++;
+                    while (nums[right] === nums[right - 1]) right--;//重复的要去掉否则可能会有重复结果的
+                    left++;
+                    right--
+                } else {
+                    sum < 0 ? left++ : right--
+                }
+            }
+        }
+        return result
+    };
+
+    //第十六题链接https://leetcode-cn.com/problems/3sum-closest/
+    //整体思路和上一题类似,从和为0改成了找到一个差值最小,且唯一
+    /**
+     * @param {number[]} nums
+     * @param {number} target
+     * @return {number}
+     */
+    let threeSumClosest = function (nums, target) {
+        nums.sort((a, b) => a - b);
+        let result = nums[0] + nums[1] + nums[2];
+        for (let i = 0; i < nums.length; i++) {
+            let left = i + 1,
+                right = nums.length - 1;//设左右指针
+            while (left < right) {
+                let sum = nums[i] + nums[left] + nums[right];
+                if (sum === target) return target;
+                if (Math.abs(sum - target) < Math.abs(result - target)) {
+                    result = sum;
+                }
+                sum < target ? left++ : right--
+            }
+        }
+        return result
+    };
 </script>
 </body>
 </html>

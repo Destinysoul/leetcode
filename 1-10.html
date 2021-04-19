@@ -186,14 +186,14 @@
         }
     };
     //看了题解的思路，除以10取余数，进行拼接即可
-    // let reverse = function(x) {
-    //     let result = 0;
-    //     while(x !== 0) {
-    //         result = result * 10 + x % 10;
-    //         x = (x / 10) | 0;
-    //     }
-    //     return (result | 0) === result ? result : 0;
-    // };
+    let new_reverse = function(x) {
+        let result = 0;
+        while(x !== 0) {
+            result = result * 10 + x % 10;
+            x = (x / 10) | 0;
+        }
+        return (result | 0) === result ? result : 0;
+    };
 
     //第八题链接https://leetcode-cn.com/problems/string-to-integer-atoi/
     //先创建一个judge函数判断是否越界
@@ -259,23 +259,23 @@
         return true
     };
     //进阶版本
-    // let more_isPalindrome = function (x) {
-    //     if (x < 0) return false;
-    //     if (x < 10) return true;
-    //     let result = 0;
-    //     while (x > 0) {
-    //         result = 10 * result + x % 10;
-    //         x = Math.floor(x / 10);
-    //         if(result===0){
-    //             return false
-    //         }else{
-    //             if (result === x || result === Math.floor(x / 10)) {
-    //                 return true
-    //             }
-    //         }
-    //     }
-    //     return false
-    // };
+    let more_isPalindrome = function (x) {
+        if (x < 0) return false;
+        if (x < 10) return true;
+        let result = 0;
+        while (x > 0) {
+            result = 10 * result + x % 10;
+            x = Math.floor(x / 10);
+            if(result===0){
+                return false
+            }else{
+                if (result === x || result === Math.floor(x / 10)) {
+                    return true
+                }
+            }
+        }
+        return false
+    };
 
     //第十题链接https://leetcode-cn.com/problems/regular-expression-matching/
     //正则不太会，这题抄答案了。。
