@@ -319,6 +319,71 @@
         }
         return result
     };
+
+    //第十七题链接https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/
+    //长度为0则返回空
+    //首先把每个按键位置上的字母写成一个数组，数组初始化为输入第一位的内容（如3则为['d','e','f']）
+    //后面每添加一位时，对result数组的每一项进行循环并添加对应的字母
+    //如digits为23，['d','e','f']添加后，则成为['d','e','f','dg','dh','di','eg','eh','eu','fg','fh','fi']
+    //最后再去掉前面的部分，即添加之前的result.length，保留新的result即为所需
+    /**
+     * @param {string} digits
+     * @return {string[]}
+     */
+    let letterCombinations = function (digits) {
+        if (digits.length === 0) return [];
+        let result = [];
+        let letters = ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz'];
+        let temp = letters[parseInt(digits[0]) - 2];
+        for (let j = 0; j < temp.length; j++) {
+            result.push(temp[j])
+        }
+        for (let i = 1; i < digits.length; i++) {
+            let temp = letters[parseInt(digits[i]) - 2];
+            let temp_length = result.length;
+            for (let j = 0; j < temp.length; j++) {
+                for (let k = 0; k < temp_length; k++) {
+                    result.push(result[k] + temp[j]);
+                }
+            }
+            result.splice(0, temp_length);
+        }
+        return result
+    };
+
+    //第十八题链接https://leetcode-cn.com/problems/4sum/
+    //与第十五，十六题类似，但需要多一层循环,注释写在function内部了
+    /**
+     * @param {number[]} nums
+     * @param {number} target
+     * @return {number[][]}
+     */
+    let fourSum = function (nums, target) {
+        nums.sort((a, b) => a - b);
+        let result = [], length = nums.length;
+        if (length < 4) return [];
+        for (let i = 0; i < length - 3; i++) {
+            if (i > 0 && nums[i] === nums[i - 1]) continue;//重复跳过
+            if (nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target) break;//最小四个大于target则跳出
+            if (nums[i] + nums[length - 1] + nums[length - 2] + nums[length - 3] < target) continue;//最大三个数都不够则跳出循环下一个
+            for (let j = i + 1; j < length - 2; j++) {
+                let left = j + 1, right = length - 1;//设立左右指针
+                if (j - 1 > i && nums[j] === nums[j - 1]) continue;//只判断后一个数字,重复跳过
+                while (left < right) {
+                    if (nums[i] + nums[j] + nums[left] + nums[right] === target) {
+                        result.push([nums[i], nums[j], nums[left], nums[right]]);
+                        while (nums[left] === nums[left + 1]) left++;
+                        while (nums[right] === nums[right - 1]) right--;
+                        left++;
+                        right--;
+                    } else {
+                        nums[i] + nums[j] + nums[left] + nums[right] > target ? right-- : left++
+                    }
+                }
+            }
+        }
+        return result
+    };
 </script>
 </body>
 </html>
