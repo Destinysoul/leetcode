@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>11-20</title>
+    <script src="data-structure.js"></script>
 </head>
 <body>
 <script>
@@ -383,6 +384,72 @@
             }
         }
         return result
+    };
+
+    //第十九题链接https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/
+    //首先判断是否为空，空直接返回null
+    //因为要删除指定节点，所以可以考虑分成两部分之后再合并起来
+    /**
+     * Definition for singly-linked list.
+     * function ListNode(val, next) {
+     *     this.val = (val===undefined ? 0 : val)
+     *     this.next = (next===undefined ? null : next)
+     * }
+     */
+    /**
+     * @param {ListNode} head
+     * @param {number} n
+     * @return {ListNode}
+     */
+    let removeNthFromEnd = function (head, n) {
+        if (head.next === undefined) return null;
+        let first = head, second = head;//两段分别为前后
+        //第一遍循环截取出前面的
+        while (--n) {
+            head = head.next;
+        }
+        first = first.next;
+        //第二遍循环截取后面的
+        while (first && first.next) {
+            first = first.next;
+            second = second.next
+        }
+        //重新拼接
+        second.next = second.next.next;
+        return head
+    };
+
+    //第二十题链接https://leetcode-cn.com/problems/valid-parentheses/
+    //核心思路就是只要括号可以成对消除即可
+    //首先给定一个result数组，存放没有消除的括号
+    //如果是左括号，则push入数组，如果是右括号，判断是否和最后一个相同，相同则删除，不同返回false
+    //遍历完s之后，如果result为空，则证明配对成功
+    /**
+     * @param {string} s
+     * @return {boolean}
+     */
+    var isValid = function (s) {
+        let result = [];
+        for (let i = 0; i < s.length; i++) {
+            if (['(', '[', '{'].indexOf(s[i]) !== -1) {
+                result.push(s[i])
+            } else {
+                if (result.length === 0) return false;
+                let last = result[result.length - 1];
+                switch (s[i]) {
+                    case ")":
+                        if (last !== "(") return false;
+                        break;
+                    case "]":
+                        if (last !== "[") return false;
+                        break;
+                    case "}":
+                        if (last !== "{") return false
+                }
+                result.pop()
+            }
+        }
+        return result.length === 0
     };
 </script>
 </body>

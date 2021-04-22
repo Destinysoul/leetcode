@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>21-30</title>
+</head>
+<body>
+<script>
+    //第二十一题链接https://leetcode-cn.com/problems/merge-two-sorted-lists/
+    //如果有一个为空，则返回另一个
+    //先给定一个头结点，接着循环
+    //比较两个链表的节点值大小，将小的作为返回的next,并且该链表进行到下一个节点
+    //当一个链表空了之后，将剩下的链接到结果即可
+    /**
+     * Definition for singly-linked list.
+     * function ListNode(val, next) {
+     *     this.val = (val===undefined ? 0 : val)
+     *     this.next = (next===undefined ? null : next)
+     * }
+     */
+    /**
+     * @param {ListNode} l1
+     * @param {ListNode} l2
+     * @return {ListNode}
+     */
+    let mergeTwoLists = function (l1, l2) {
+        if (l1 === null) return l2;
+        if (l2 === null) return l1;
+        let head = new ListNode(-1);
+        let result = head;
+        while (l1 !== null && l2 !== null) {
+            if (l1.val <= l2.val) {
+                result.next = l1;
+                l1 = l1.next;
+            } else {
+                result.next = l2;
+                l2 = l2.next;
+            }
+            result = result.next;
+        }
+        result.next = l1 === null ? l2 : l1;
+        return head.next;
+    };
+
+    //第二十二题链接https://leetcode-cn.com/problems/generate-parentheses/
+    //这种递归我还是完全搞不定qaq，这题抄答案的
+    /**
+     * @param {number} n
+     * @return {string[]}
+     */
+    var generateParenthesis = function (n) {
+        let result = [];
+        let dfs = (lRemain, rRemain, str) => {
+            //如果长度符合，则push入结果
+            if (str.length === n * 2) {
+                result.push(str);
+            }
+            if (lRemain > 0) {
+                dfs(lRemain - 1, rRemain, str + "(")
+            }
+            if (rRemain > lRemain) {
+                dfs(lRemain, rRemain - 1, str + ")")
+            }
+        };
+        dfs(n, n, '');
+        return result
+    };
+    console.log(generateParenthesis(3))
+</script>
+</body>
+</html>
