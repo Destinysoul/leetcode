@@ -25,4 +25,3 @@ class ListStack {
         return root
     }
 }
-

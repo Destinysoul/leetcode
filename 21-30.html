@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>21-30</title>
+    <script src="data-structure.js"></script>
 </head>
 <body>
 <script>
@@ -48,7 +49,7 @@
      * @param {number} n
      * @return {string[]}
      */
-    var generateParenthesis = function (n) {
+    let generateParenthesis = function (n) {
         let result = [];
         let dfs = (lRemain, rRemain, str) => {
             //如果长度符合，则push入结果
@@ -65,7 +66,182 @@
         dfs(n, n, '');
         return result
     };
-    console.log(generateParenthesis(3))
+
+    //第二十三题链接https://leetcode-cn.com/problems/merge-k-sorted-lists/
+    //借鉴一下二十一题的答案，两两合并即可
+    /**
+     * Definition for singly-linked list.
+     * function ListNode(val, next) {
+     *     this.val = (val===undefined ? 0 : val)
+     *     this.next = (next===undefined ? null : next)
+     * }
+     */
+    /**
+     * @param {ListNode[]} lists
+     * @return {ListNode}
+     */
+    let mergeKLists = function (lists) {
+        let mergeTwoLists = function (l1, l2) {
+            if (l1 === null) return l2;
+            if (l2 === null) return l1;
+            let head = new ListNode(-1);
+            let result = head;
+            while (l1 !== null && l2 !== null) {
+                if (l1.val <= l2.val) {
+                    result.next = l1;
+                    l1 = l1.next;
+                } else {
+                    result.next = l2;
+                    l2 = l2.next;
+                }
+                result = result.next;
+            }
+            result.next = l1 === null ? l2 : l1;
+            return head.next;
+        };
+        let n = lists.length;
+        if (n === 0) return null;
+        let result = lists[0];
+        for (let i = 1; i < n; i++) {
+            if (lists[i]) {
+                result = mergeTwoLists(result, lists[i])
+            }
+        }
+        return result
+    };
+
+    //第二十四题链接https://leetcode-cn.com/problems/swap-nodes-in-pairs/
+    //本质上是两两交换节点，不过这个效率好想有点拉胯。。
+    /**
+     * Definition for singly-linked list.
+     * function ListNode(val, next) {
+     *     this.val = (val===undefined ? 0 : val)
+     *     this.next = (next===undefined ? null : next)
+     * }
+     */
+    /**
+     * @param {ListNode} head
+     * @return {ListNode}
+     */
+    let swapPairs = function (head) {
+        if (head === null || head.next === null) return head;
+        let newHead = new ListNode(0);
+        newHead.next = head;
+        let temp = newHead;
+        //若下一个和下下个节点均存在则进行交换
+        while (temp.next !== null && temp.next.next !== null) {
+            let temp1 = temp.next;
+            let temp2 = temp.next.next;
+            temp.next = temp2;
+            temp1.next = temp2.next;
+            temp2.next = temp1;
+            temp = temp1;//此时newHead.next.next===temp
+            //console.log(temp === newHead.next.next)->true
+        }
+        return newHead.next
+    };
+
+    //第二十五题链接https://leetcode-cn.com/problems/reverse-nodes-in-k-group/
+    //我太菜了，抄答案的qaq，看明白了也有思路但是一时半会写不出来==
+    /**
+     * Definition for singly-linked list.
+     * function ListNode(val, next) {
+     *     this.val = (val===undefined ? 0 : val)
+     *     this.next = (next===undefined ? null : next)
+     * }
+     */
+    /**
+     * @param {ListNode} head
+     * @param {number} k
+     * @return {ListNode}
+     */
+    let reverseKGroup = function (head, k) {
+        const myReverse = (head, tail) => {
+            let prev = tail.next;
+            let p = head;
+            while (prev !== tail) {
+                const nex = p.next;
+                p.next = prev;
+                prev = p;
+                p = nex;
+            }
+            return [tail, head];
+        };
+        const hair = new ListNode(0);
+        hair.next = head;
+        let pre = hair;
+
+        while (head) {
+            let tail = pre;
+            // 查看剩余部分长度是否大于等于 k
+            for (let i = 0; i < k; ++i) {
+                tail = tail.next;
+                if (!tail) {
+                    return hair.next;
+                }
+            }
+            const nex = tail.next;
+            [head, tail] = myReverse(head, tail);
+            // 把子链表重新接回原链表
+            pre.next = head;
+            tail.next = nex;
+            pre = tail;
+            head = tail.next;
+        }
+        return hair.next;
+    };
+
+    //第二十六题链接https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/
+    //这道题我觉得最难的在于理解题目意思
+    //这题需要的返回值是不重复的个数，且原数组前x位是不重复的数
+    //设立一个result统计个数，在遇到不重复的时候，将数组的result位更改，然后result++即可
+    /**
+     * @param {number[]} nums
+     * @return {number}
+     */
+    let removeDuplicates = function (nums) {
+        if (nums.length === 0) return 0;
+        let result = 1;
+        for (let i = 0; i < nums.length - 1; i++) {
+            if (nums[i] !== nums[i + 1]) {
+                nums[result] = nums[i + 1];
+                result++;
+            }
+        }
+        return result
+    };
+
+    //第二十七题链接https://leetcode-cn.com/problems/remove-element/
+    //和上题思路一样，遇到符合条件的数放在数组的第result位即可
+    //哦天哪终于碰到两个秒杀的题了，感动ing。。
+    /**
+     * @param {number[]} nums
+     * @param {number} val
+     * @return {number}
+     */
+    let removeElement = function (nums, val) {
+        if (nums.length === 0) return 0;
+        let result = 0;
+        for (let i = 0; i < nums.length; i++) {
+            if(nums[i] !== val){
+              nums[result]=nums[i];
+              result++
+            }
+        }
+        return result
+    };
+
+    //第二十八题链接https://leetcode-cn.com/problems/implement-strstr/
+    //我承认我偷懒了==保养头发比较重要hhh
+    //不给这么用的话，估计我会暴力硬对比吧，毕竟我这智商也就能想到这方法了。。
+    /**
+     * @param {string} haystack
+     * @param {string} needle
+     * @return {number}
+     */
+    let strStr = function(haystack, needle) {
+        return haystack.indexOf(needle)
+    };
 </script>
 </body>
 </html>
