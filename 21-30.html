@@ -223,9 +223,9 @@
         if (nums.length === 0) return 0;
         let result = 0;
         for (let i = 0; i < nums.length; i++) {
-            if(nums[i] !== val){
-              nums[result]=nums[i];
-              result++
+            if (nums[i] !== val) {
+                nums[result] = nums[i];
+                result++
             }
         }
         return result
@@ -239,9 +239,102 @@
      * @param {string} needle
      * @return {number}
      */
-    let strStr = function(haystack, needle) {
+    let strStr = function (haystack, needle) {
         return haystack.indexOf(needle)
     };
+
+    //第二十九题链接https://leetcode-cn.com/problems/divide-two-integers/
+    //脑子不好使的只能想到一个一个加，然后果断超时了hhh
+    //大概应该用二分法吧，从题解抄了一个
+    /**
+     * @param {number} dividend
+     * @param {number} divisor
+     * @return {number}
+     */
+    let divide = function (dividend, divisor) {
+        let isForward = (dividend > 0 && divisor > 0) || (dividend < 0 && divisor < 0);
+        let absDividend = dividend > 0 ? dividend : -dividend;
+        let absDivisor = divisor > 0 ? divisor : -divisor;
+
+        let left = 0;
+        let right = isForward ? 2147483647 : 2147483648;
+        let result = left;
+        while (left <= right) {
+            let middle = Math.floor((left + right) / 2);
+            if (middle * absDivisor === absDividend) {
+                result = middle;
+                break;
+            } else if (middle * absDivisor > absDividend) {
+                right = middle - 1;
+            } else {
+                result = middle;
+                left = middle + 1;
+            }
+        }
+        result = isForward ? result : -result;
+        return result;
+        // if (dividend === 0) return 0;
+        // let result = 0;
+        // if (dividend > 0 && divisor > 0) {
+        //     for (let i = 0; i <= dividend; i += divisor) {
+        //         result++
+        //     }
+        // } else if (dividend > 0 && divisor < 0) {
+        //     for (let i = 0; i <= dividend; i -= divisor) {
+        //         result--
+        //     }
+        // } else if (dividend < 0 && divisor > 0) {
+        //     for (let i = 0; i >= dividend; i -= divisor) {
+        //         result--
+        //     }
+        // } else {
+        //     for (let i = 0; i >= dividend; i += divisor) {
+        //         result++
+        //     }
+        // }
+        // if (result > 2147483647) return 2147483647;
+        // if (result < -2147483648) return -2147483648;
+        // return result > 0 ? result - 1 : result + 1
+    };
+
+    //第三十题链接https://leetcode-cn.com/problems/substring-with-concatenation-of-all-words/
+    //这题题目意思需要理解一下。。比如words有两个相同的，则s中也需要
+    //第一反应截取字符串匹配每个word，但是会有重复的，所以不行
+    //然后思考是不是可以匹配到然后去掉，会发现有babaab匹配['ab','ba','ba']这种。。
+    //那只能换个思路，用map试试
+    /**
+     * @param {string} s
+     * @param {string[]} words
+     * @return {number[]}
+     */
+    let findSubstring = function (s, words) {
+        if (words.length === 0) return [];
+        let result = [],
+            wordsMap = {},
+            wordLength = words[0].length,
+            totalLength = wordLength * words.length;
+        //创建wordMap
+        for (let key of words) {
+            //如果已经存在++，否则定义为1
+            wordsMap[key] ? wordsMap[key]++ : wordsMap[key] = 1
+        }
+        //暴力破解
+        for (let i = 0; i < s.length - totalLength + 1; i++) {
+            let temp = Object.assign({}, wordsMap);//不可以直接temp=wordsMap，这样会修改wordsMap
+            for (let j = i; j < i + totalLength - wordLength + 1; j += wordLength) {
+                let str = s.slice(j, j + wordLength);//截取出和words等长的
+                if (temp[str]) {
+                    temp[str]--
+                } else {
+                    break;
+                }
+            }
+            //如果所有值都是0
+            if (Object.values(temp).every(n => n === 0)) result.push(i)
+        }
+        return result
+    };
+    console.log(findSubstring("ababaab", ["ab", "ba", "ba"]))
 </script>
 </body>
 </html>
