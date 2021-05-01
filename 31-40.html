@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="data-structure.js"></script>
+</head>
+<body>
+<script>
+    //第三十一题链接https://leetcode-cn.com/problems/next-permutation/
+    //这题意思需要先理解一下。。我也描述不好=）
+    //首先从后向前遍历，找出第一个前数比后数小的位置，暂时记为nums[i],nums[i+1]
+    //随后再从最后一位开始查找第一个比nums[i]大的，并交换位置
+    //随后交换完毕后，将i位置后的序列翻转即为所求
+    //即除了第一次交换位置的数之外，前后都应该为递增即为所求，没有则直接翻转
+    /**
+     * @param {number[]} nums
+     * @return {void} Do not return anything, modify nums in-place instead.
+     */
+    var nextPermutation = function (nums) {
+        let i = nums.length - 2;//防止i+1不存在
+        while (i >= 0 && nums[i] >= nums[i + 1]) {
+            i--//符合条件就往前一位
+        }
+        //存在
+        if (i >= 0) {
+            let j = nums.length - 1;
+            while (j >= 0 && nums[j] <= nums[i]) {
+                j--;
+            }
+            [nums[i], nums[j]] = [nums[j], nums[i]]//交换两数
+        }
+        //不存在则直接翻转
+        let left = i + 1, right = nums.length - 1;
+        while (left < right) {
+            [nums[left], nums[right]] = [nums[right], nums[left]];
+            left++;
+            right--
+        }
+        return nums
+    };
+
+    //第三十二题链接https://leetcode-cn.com/problems/longest-valid-parentheses/
+    //第一反应使用堆栈进出判断，想了一下觉得有没有更简单的，提交失败N次后决定还是用栈吧。。
+    /**
+     * @param {string} s
+     * @return {number}
+     */
+    var longestValidParentheses = function (s) {
+        if (s.length < 2) return 0;
+        let result = 0, stack = [-1];
+        for (let i = 0; i < s.length; i++) {
+            if (s[i] === '(') {
+                stack.push(i);//注意push进去的是i，这样等会可以计算有效长度
+            } else {
+                //每出现一次右括号的时候都要计算一下有效长度
+                stack.pop();
+                if (stack.length !== 0) {
+                    result = Math.max(result, i - stack[stack.length - 1]);
+                }else{
+                    stack.push(i)
+                }
+            }
+        }
+        return result
+    };
+    console.log(longestValidParentheses("(()()))))"))
+</script>
+</body>
+</html>
