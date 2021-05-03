@@ -19,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/31-40.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="108" column="44" selection-start-line="108" selection-start-column="44" selection-end-line="108" selection-end-column="44" />
+            <state relative-caret-position="388">
+              <caret line="255" column="48" selection-start-line="255" selection-start-column="48" selection-end-line="255" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -74,6 +74,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -85,7 +86,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -93,7 +93,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1619955085063" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1620023074983" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -145,7 +145,8 @@
       <workItem from="1619486365402" duration="3942000" />
       <workItem from="1619530437089" duration="1909000" />
       <workItem from="1619838069601" duration="4366000" />
-      <workItem from="1619943668160" duration="4229000" />
+      <workItem from="1619943668160" duration="6404000" />
+      <workItem from="1620020799092" duration="2125000" />
     </task>
     <task id="LOCAL-00001" summary="2021-4-12 question 1&amp;2">
       <created>1618234391358</created>
@@ -231,17 +232,24 @@
       <option name="project" value="LOCAL" />
       <updated>1619490941338</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="question 33&amp;34">
+      <created>1619955121228</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1619955121228</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67894000" />
+    <option name="totallyTimeSpent" value="72194000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="953" y="0" width="974" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26367614" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26914662" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -284,7 +292,8 @@
     <MESSAGE value="2021-4-18 question 13&amp;14" />
     <MESSAGE value="question 23-28" />
     <MESSAGE value="question 29&amp;30" />
-    <option name="LAST_COMMIT_MESSAGE" value="question 29&amp;30" />
+    <MESSAGE value="question 33&amp;34" />
+    <option name="LAST_COMMIT_MESSAGE" value="question 33&amp;34" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/1-50.html" />
@@ -328,8 +337,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/31-40.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="108" column="44" selection-start-line="108" selection-start-column="44" selection-end-line="108" selection-end-column="44" />
+        <state relative-caret-position="388">
+          <caret line="255" column="48" selection-start-line="255" selection-start-column="48" selection-end-line="255" selection-end-column="48" />
         </state>
       </provider>
     </entry>
