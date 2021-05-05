@@ -403,13 +403,67 @@
     };
 
     //第三十九题链接https://leetcode-cn.com/problems/combination-sum/
+    //测试用例[2,3,6,7],7
+    //堆栈顺序2->22->222->2222->2223->2226->2227->223->226->227->23->233->
+    //236->237->3->33->333->336->337->36->37->6->66->67->7
     /**
      * @param {number[]} candidates
      * @param {number} target
      * @return {number[][]}
      */
     var combinationSum = function (candidates, target) {
-       
+        let result = [];
+        let dfs = (start, combine, total) => {
+            if (total > target) {
+                return
+            }
+            if (total === target) {
+                //说实话没明白为什么这里的combine是一个对象呢。。
+                result.push(combine.slice());
+                return
+            }
+            for (let i = start; i < candidates.length; i++) {
+                combine.push(candidates[i]);
+                dfs(i, combine, total + candidates[i]);
+                combine.pop()
+            }
+        };
+        dfs(0, [], 0);
+        return result
+    };
+
+    //第四十题链接https://leetcode-cn.com/problems/combination-sum-ii/
+    //测试用例[1,1,2,3],6
+    //堆栈顺序1->11->112->1123->113->12->123->13->2->23->3
+    /**
+     * @param {number[]} candidates
+     * @param {number} target
+     * @return {number[][]}
+     */
+    var combinationSum2 = function (candidates, target) {
+        let result = [];
+        candidates.sort((a,b)=>a-b);
+        let dfs = (start, combine, sum) => {
+            if (sum > target) {
+                return
+            }
+            if (sum === target) {
+                result.push(combine.slice());
+                return
+            }
+            for (let i = start; i < candidates.length; i++) {
+                //防止重复，比如[1,1,2,3],target=6,
+                //第一个1循环完后，跳过第二个1，否则会有两个123输出
+                if (i - 1 >= start && candidates[i - 1] === candidates[i]) {
+                    continue
+                }
+                combine.push(candidates[i]);
+                dfs(i + 1, combine, sum + candidates[i]);
+                combine.pop()
+            }
+        };
+        dfs(0, [], 0);
+        return result
     };
 </script>
 </body>
