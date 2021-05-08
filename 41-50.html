@@ -113,7 +113,6 @@
                     dp[i][j] = true;
             }
         }
-        console.log(dp);
         return dp[sLen][pLen]; // 整个s串和整个p串是否匹配
         // let i = 0, pointer = 0, compare = s[0];
         // while (i < p.length) {
@@ -170,7 +169,56 @@
         //     }
         // }
     };
-    console.log(isMatch("aaaaab", "*ab"))
+
+    //第四十五题链接https://leetcode-cn.com/problems/jump-game-ii/
+    //这题总感觉描述有问题，如果某个位置是0，默认就走一步，按描述不是不能走嘛0.0
+    //不考虑上面那个问题，那就计算两步能走多远，贪就完事了
+    /**
+     * @param {number[]} nums
+     * @return {number}
+     */
+    var jump = function (nums) {
+        let curr = 0; // 当前位置
+        let next = 0; // 跳跃后的位置
+        let stepNum = 0; // 跳跃次数
+        let length = nums.length - 1;
+        for (let i = 0; i < length; i++) {
+            next = Math.max(next, i + nums[i]);// 跳一次的最远跳跃距离 = 当前位置 + 可跳跃的最大数
+            if (curr >= length) break;
+            if (curr === i) {
+                curr = next;
+                stepNum++;
+            }
+        }
+        return stepNum;
+    };
+
+    //第四十六题链接https://leetcode-cn.com/problems/permutations/
+    //DFS递归
+    /**
+     * @param {number[]} nums
+     * @return {number[][]}
+     */
+    var permute = function (nums) {
+        let result = [];
+        let used = {};//记录用过的
+        let dfs = (path) => {
+            if (path.length === nums.length) {
+                result.push(path.slice());
+                return
+            }
+            for (let i = 0; i < nums.length; i++) {
+                if (used[nums[i]]) continue;
+                path.push(nums[i]);
+                used[nums[i]] = true;
+                dfs(path);
+                path.pop();
+                used[nums[i]] = false;
+            }
+        };
+        dfs([]);
+        return result
+    };
 </script>
 </body>
 </html>
