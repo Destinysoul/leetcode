@@ -260,19 +260,77 @@
     var rotate = function (matrix) {
         let n = matrix.length;
         for (let x = 0; x < Math.floor(n / 2); x++) {
-            for (let y = 0; y < n - x-1; y++) {
+            for (let y = 0; y < n - x - 1; y++) {
                 if (y < x) continue;
                 let temp = 0;
+                //四个一组进行坐标变换
                 temp = matrix[x][y];
                 matrix[x][y] = matrix[n - y - 1][x];
                 matrix[n - y - 1][x] = matrix[n - x - 1][n - y - 1];
                 matrix[n - x - 1][n - y - 1] = matrix[y][n - x - 1];
-                matrix[y][n - x - 1] =temp;
+                matrix[y][n - x - 1] = temp;
             }
         }
-        return matrix
     };
-    console.log(rotate([[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]))
+
+    //第四十九题链接https://leetcode-cn.com/problems/group-anagrams/
+    //我发现我就很少想到用对象解决问题，总是试图用数组。。果然活该单着
+    /**
+     * @param {string[]} strs
+     * @return {string[][]}
+     */
+    var groupAnagrams = function (strs) {
+        //超时
+        let result = {};
+        result.push([strs[0]]);
+        let judgeSame = (str1, str2) => {
+            return str1.split("").sort().join("") === str2.split("").sort().join("");
+        };
+        for (let i = 1; i < strs.length; i++) {
+            let length = result.length;
+            for (let j = 0; j < length; j++) {
+                if (judgeSame(result[j][0], strs[i])) {
+                    result[j].push(strs[i]);
+                    j = length;
+                }
+                if (j === result.length - 1 && !judgeSame(result[j][0], strs[i])) {
+                    result.push([strs[i]])
+                }
+            }
+        }
+        return result
+        //官方
+        // const map = new Map();
+        // for (let str of strs) {
+        //     let array = Array.from(str);
+        //     array.sort();
+        //     let key = array.toString();
+        //     let list = map.get(key) ? map.get(key) : new Array();
+        //     list.push(str);
+        //     map.set(key, list);
+        // }
+        // return Array.from(map.values());
+    };
+
+    //第五十题链接https://leetcode-cn.com/problems/powx-n/
+    //这题超出范围之后输出啥呢0.0题目没说清楚啊。。
+    //分类讨论就好=）
+    //暴力破解肯定超时==
+    /**
+     * @param {number} x
+     * @param {number} n
+     * @return {number}
+     */
+    var myPow = function (x, n) {
+        if (n === 0) return 1;
+        if (n < 0) {
+            return 1 / myPow(x, -n)
+        }
+        if (n % 2) {
+            return x * myPow(x, n - 1)
+        }
+        return myPow(x * x, n / 2)
+    };
 </script>
 </body>
 </html>
