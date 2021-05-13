@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>51-60</title>
+    <script src="data-structure.js"></script>
+</head>
+<body>
+<script>
+    //第五十一题链接https://leetcode-cn.com/problems/n-queens/
+    //好想这题很经典的样子
+    /**
+     * @param {number} n
+     * @return {string[][]}
+     */
+    let solveNQueens = function (n) {
+        //先创建棋盘
+        let board = new Array(n);
+        for (let i = 0; i < n; i++) {
+            board[i] = new Array(n).fill(".");
+        }
+        let result = [];
+        //判断是否符合条件
+        let isValid = (row, col) => {
+            for (let i = 0; i < row; i++) {
+                for (let j = 0; j < n; j++) {
+                    if (board[i][j] === 'Q' && (j === col || i + j === row + col || i - j === row - col)) {
+                        return false
+                    }
+                }
+            }
+            return true
+        };
+        let solve = (row) => {
+            //结果成立则push入结果
+            if (row === n) {
+                let tempBoard = board.slice();
+                for (let i = 0; i < n; i++) {
+                    tempBoard[i] = tempBoard[i].join('');
+                }
+                result.push(tempBoard);
+                return
+            }
+            for (let col = 0; col < n; col++) {
+                if (isValid(row, col)) {
+                    board[row][col] = "Q";
+                    solve(row + 1);
+                    board[row][col] = '.';
+                }
+            }
+        };
+        solve(0);
+        return result
+    };
+
+    //第五十二题链接https://leetcode-cn.com/problems/n-queens-ii/
+    //这题和上题一样。。一个输出具体解一个输出个数就好了
+    /**
+     * @param {number} n
+     * @return {number}
+     */
+    let totalNQueens = function (n) {
+        let board = new Array(n);
+        for (let i = 0; i < n; i++) {
+            board[i] = new Array(n).fill('.');
+        }
+        let result = 0;
+        let isValid = (row, col) => {
+            for (let i = 0; i < row; i++) {
+                for (let j = 0; j < n; j++) {
+                    if (board[i][j] === 'Q' && (j === col || i + j === row + col || i - j === row - col)) {
+                        return false
+                    }
+                }
+            }
+            return true
+        };
+        let solve = (row) => {
+            if (row === n) {
+                result++;
+                return
+            }
+            for (let col = 0; col < n; col++) {
+                if (isValid(row, col)) {
+                    board[row][col] = "Q";
+                    solve(row + 1);
+                    board[row][col] = "."
+                }
+            }
+        };
+        solve(0);
+        return result
+    };
+
+    //第五十三题链接https://leetcode-cn.com/problems/maximum-subarray/
+    /**
+     * @param {number[]} nums
+     * @return {number}
+     */
+    let maxSubArray = function (nums) {
+        //初始赋值
+        let max = nums[0],
+            temp = nums[0];
+        for (let i = 1; i < nums.length; i++) {
+            //如果当前位大于0
+            if (temp + nums[i] > temp) {
+                //如果之前的小于0
+                if (temp <= 0) {
+                    //比较max和当前位的值，当前赋给temp
+                    max = max > nums[i] ? max : nums[i];
+                    temp = nums[i]
+                }
+                //之前大于0，则继续累加
+                else {
+                    temp += nums[i];
+                }
+            }
+            //加上当前位小于0，和temp相加大于0则保留，否则temp替换为当前值
+            else {
+                temp = temp + nums[i] > 0 ? temp + nums[i] : nums[i];
+            }
+            //判断max是否要替换
+            max = max > temp ? max : temp;
+        }
+        return max 
+    };
+</script>
+</body>
+</html>
