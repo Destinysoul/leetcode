@@ -29,7 +29,7 @@
                     }
                 }
             }
-            return true
+            return 101
         };
         let solve = (row) => {
             //结果成立则push入结果
@@ -73,7 +73,7 @@
                     }
                 }
             }
-            return true
+            return 101
         };
         let solve = (row) => {
             if (row === n) {
@@ -123,6 +123,68 @@
             max = max > temp ? max : temp;
         }
         return max
+    };
+
+    //第五十四题链接https://leetcode-cn.com/problems/spiral-matrix/
+    //好想我判断的方法有点复杂了。。不过大概就是这么个意思吧0.0
+    /**
+     * @param {number[][]} matrix
+     * @return {number[]}
+     */
+    var spiralOrder = function (matrix) {
+        if (matrix.length === 1) return matrix[0];
+        let row = 0,
+            col = 0,
+            m = matrix.length,
+            n = matrix[0].length;
+        //初始化
+        let result = [];
+        result.push(matrix[0][0]);
+        matrix[0][0] = 101;
+        for (let i = 0; i < m * n - 1; i++) {
+            //向上
+            if ((row === m - 1 || matrix[row + 1][col] === 101) && (col === 0 || matrix[row][col - 1] === 101) && matrix[row - 1][col] !== 101 && row > 0) {
+                row -= 1;
+                result.push(matrix[row][col]);
+                matrix[row][col] = 101;
+            }
+            //向左
+            else if ((row === m - 1 || matrix[row + 1][col] === 101) && (col === n - 1 || matrix[row][col + 1] === 101) && matrix[row][col - 1] !== 101 && col > 0) {
+                col -= 1;
+                result.push(matrix[row][col]);
+                matrix[row][col] = 101;
+            }
+            //向右
+            else if ((row === 0 || matrix[row - 1][col] === 101) && (col === 0 || matrix[row][col - 1] === 101) && matrix[row][col + 1] !== 101 && col < n - 1) {
+                col += 1;
+                result.push(matrix[row][col]);
+                matrix[row][col] = 101;
+            }
+            //向下
+            else if ((row === 0 || matrix[row - 1][col] === 101) && (col === n - 1 || matrix[row][col + 1] === 101) && matrix[row + 1][col] !== 101 && row < m - 1) {
+                row += 1;
+                result.push(matrix[row][col]);
+                matrix[row][col] = 101;
+            }
+        }
+        return result
+    };
+
+    //第五十五题链接https://leetcode-cn.com/problems/jump-game/
+    /**
+     * @param {number[]} nums
+     * @return {boolean}
+     */
+    var canJump = function (nums) {
+        let position = 0;
+        for (let i = 0; i < nums.length; i++) {
+            //i大于位置，那肯定是有0过不去失败了
+            if (i > position) {
+                return false
+            }
+            position = Math.max(position, nums[i] + i);
+        }
+        return true
     };
 </script>
 </body>
