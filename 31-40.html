@@ -17,7 +17,7 @@
      * @param {number[]} nums
      * @return {void} Do not return anything, modify nums in-place instead.
      */
-    var nextPermutation = function (nums) {
+    let nextPermutation = function (nums) {
         let i = nums.length - 2;//防止i+1不存在
         while (i >= 0 && nums[i] >= nums[i + 1]) {
             i--//符合条件就往前一位
@@ -46,7 +46,7 @@
      * @param {string} s
      * @return {number}
      */
-    var longestValidParentheses = function (s) {
+    let longestValidParentheses = function (s) {
         if (s.length < 2) return 0;
         let result = 0, stack = [-1];
         for (let i = 0; i < s.length; i++) {
@@ -73,7 +73,7 @@
      * @param {number} target
      * @return {number}
      */
-    var search = function (nums, target) {
+    let search = function (nums, target) {
         if (nums.length === 1 && nums[0] !== target) return -1;
         let start = 0,
             end = nums.length - 1;
@@ -112,7 +112,7 @@
      * @param {number} target
      * @return {number[]}
      */
-    var searchRange = function (nums, target) {
+    let searchRange = function (nums, target) {
         //一次循环
         // let result=[-1,-1];
         // if(nums.length===0)return [-1,-1]
@@ -181,7 +181,7 @@
      * @param {number} target
      * @return {number}
      */
-    var searchInsert = function (nums, target) {
+    let searchInsert = function (nums, target) {
         //效率甚至不如直接来
         // if (nums[0] > target) return 0;
         // if (nums[nums.length - 1] < target) return nums.length;
@@ -217,7 +217,7 @@
      // * @param {character[][]} board
      * @return {boolean}
      */
-    var isValidSudoku = function (board) {
+    let isValidSudoku = function (board) {
         let judgeArray = [];
         for (let i = 0; i < 27; i++) {
             judgeArray[i] = []
@@ -254,7 +254,7 @@
      * @param {character[][]} board
      * @return {void} Do not return anything, modify board in-place instead.
      */
-    var solveSudoku = function (board) {
+    let solveSudoku = function (board) {
         new Sudoku(board).solve();
     };
 
@@ -378,7 +378,7 @@
      * @param {number} n
      * @return {string}
      */
-    var countAndSay = function (n) {
+    let countAndSay = function (n) {
         let seed = "1", time = 1, now = "";
         while (time < n) {
             //记录该数的重复次数
@@ -411,7 +411,7 @@
      * @param {number} target
      * @return {number[][]}
      */
-    var combinationSum = function (candidates, target) {
+    let combinationSum = function (candidates, target) {
         let result = [];
         let dfs = (start, combine, total) => {
             if (total > target) {
@@ -440,7 +440,7 @@
      * @param {number} target
      * @return {number[][]}
      */
-    var combinationSum2 = function (candidates, target) {
+    let combinationSum2 = function (candidates, target) {
         let result = [];
         candidates.sort((a,b)=>a-b);
         let dfs = (start, combine, sum) => {
